@@ -13,6 +13,7 @@ const TemplateWrapper = ({ children }) => {
         <html lang="en" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
         <link
           rel="apple-touch-icon"
@@ -43,6 +44,17 @@ const TemplateWrapper = ({ children }) => {
         <meta property="og:title" content={title} />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/img/og-image.jpg" />
+        <script>
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+              if (!user) {
+                window.netlifyIdentity.on("login", () => {
+                  document.location.href = "/admin/";
+                });
+              }
+            })
+          }
+        </script>
       </Helmet>
       <Navbar />
       <div>{children}</div>
